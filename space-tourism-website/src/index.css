@@ -1,0 +1,10 @@
+@import "tailwindcss";
+
+@theme {
+  --blue-300: hsl(231, 77%, 90%);
+  --blue-900: hsl(230, 35%, 7%);
+  --white: hsl(0, 0%, 100%);
+}
+
+
+/* font-family: Barlow, Barlow Condensed and Bellefair */
