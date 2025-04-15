@@ -11,7 +11,7 @@ const Results = () => {
       </div>
 
       <h2 className="text-2xl font-bold lg:text-3xl">Great</h2>
-      <p className="text-light-lavender mt-2.5 mb-2.5 w-2xs text-base lg:w-3xs">
+      <p className="text-light-lavender mt-2.5 mb-2.5 w-2xs text-base lg:mt-0 lg:mb-0 lg:w-56">
         You scored higher than 65% of the people who have taken these tests.
       </p>
     </div>
