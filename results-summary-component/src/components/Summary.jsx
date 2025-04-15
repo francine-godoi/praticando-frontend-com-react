@@ -1,8 +1,7 @@
 import React from "react";
 import SummaryItem from "./SummaryItem";
-import data from "../../db/data.json";
 
-const Summary = () => {
+const Summary = ({ data }) => {
   const colors = ["red", "yellow", "green", "blue"];
 
   return (
@@ -17,7 +16,7 @@ const Summary = () => {
             score={item.score}
             icon={item.icon}
             baseColor={colors[index]}
-          ></SummaryItem>
+          />
         ))}
       </div>
 
