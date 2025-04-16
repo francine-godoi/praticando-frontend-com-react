@@ -1,5 +1,6 @@
 import { useState } from "react";
 import ProductCard from "./components/ProductCard";
+import Cart from "./components/Cart";
 
 function App() {
   const [data, setData] = useState([]);
@@ -42,14 +43,7 @@ function App() {
         className="flex h-fit w-80 flex-col rounded-2xl bg-white p-5 md:w-96"
       >
         <h3 className="text-red mb-8 text-xl font-bold">Your Cart (0)</h3>
-        <img
-          className="mx-auto w-32"
-          src="../src/assets/images/illustration-empty-cart.svg"
-          alt=""
-        />
-        <p className="mx-auto my-4 text-sm font-semibold text-rose-500">
-          Your added items will appear here
-        </p>
+        <Cart />
       </div>
     </div>
   );
