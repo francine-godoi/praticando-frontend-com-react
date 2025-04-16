@@ -39,7 +39,7 @@ function App() {
       </div>
       <div
         id="cart-container"
-        className="flex h-fit w-96 flex-col rounded-2xl bg-white p-5"
+        className="flex h-fit w-80 flex-col rounded-2xl bg-white p-5 md:w-96"
       >
         <h3 className="text-red mb-8 text-xl font-bold">Your Cart (0)</h3>
         <img

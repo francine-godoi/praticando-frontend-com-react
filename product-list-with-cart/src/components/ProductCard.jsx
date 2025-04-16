@@ -19,6 +19,7 @@ const ProductCard = ({ image, name, category, price, updateCart }) => {
     addToCart();
   }
 
+  //TODO: repensar esse função
   const addToCart = () => {
     const item = [{ name: name, quantity: quantity, price: price }];
     updateCart(item);
@@ -34,7 +35,11 @@ const ProductCard = ({ image, name, category, price, updateCart }) => {
           <source srcSet={image.desktop} media="(min-width: 1024px)" />
           <source srcSet={image.tablet} media="(min-width: 640px)" />
           <img
-            className="rounded-lg"
+            className={
+              openSelector
+                ? "border-red rounded-lg border-2"
+                : "rounded-lg border border-transparent"
+            }
             src={image.mobile}
             alt={`${name} image`}
           />
