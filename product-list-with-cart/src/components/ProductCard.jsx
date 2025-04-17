@@ -1,29 +1,44 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
-const ProductCard = ({ image, name, category, price, updateCart }) => {
+const ProductCard = ({
+  image,
+  name,
+  category,
+  price,
+  updateCart,
+  removedItem,
+}) => {
   const [openSelector, toggleSelector] = useState(false);
-  const [quantity, setQuantity] = useState(1);
+  const [quantity, setQuantity] = useState(0);
 
   function openQuantitySelector() {
-    toggleSelector((o) => ({ openSelector: !o.openSelector }));
-    addToCart();
+    toggleSelector((o) => ({ openSelector: true }));
+    increaseQuantity();
   }
 
   function increaseQuantity() {
     setQuantity((q) => q + 1);
-    addToCart();
   }
 
   function decreaseQuantity() {
     setQuantity((q) => Math.max(q - 1, 1));
-    addToCart();
   }
 
-  //TODO: repensar esse função
   const addToCart = () => {
-    const item = [{ name: name, quantity: quantity, price: price }];
+    const item = { name: name, quantity: quantity, price: price };
     updateCart(item);
   };
+
+  useEffect(() => {
+    if (quantity !== 0) addToCart();
+  }, [quantity]);
+
+  useEffect(() => {
+    if (removedItem === name) {
+      toggleSelector(false);
+      setQuantity(0);
+    }
+  }, [removedItem]);
 
   return (
     <div id="card-container" className="flex flex-col gap-10">
