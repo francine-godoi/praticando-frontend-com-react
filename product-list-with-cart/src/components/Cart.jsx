@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import CartItem from "./CartItem";
 
-const Cart = ({ cartItems, removeCartItem, totalOrder }) => {
+const Cart = ({ cartItems, removeCartItem, totalOrder, setIsModalOpen }) => {
   const [emptyCart, setEmptyCart] = useState(true);
 
   useEffect(() => {
@@ -11,6 +11,10 @@ const Cart = ({ cartItems, removeCartItem, totalOrder }) => {
       setEmptyCart(true);
     }
   }, [cartItems[0]]);
+
+  const openConfirmationModal = () => {
+    setIsModalOpen(true);
+  };
 
   return (
     <>
@@ -58,7 +62,10 @@ const Cart = ({ cartItems, removeCartItem, totalOrder }) => {
               delivery
             </p>
           </div>
-          <button className="bg-red mt-3 rounded-full border py-3 text-white hover:cursor-pointer hover:brightness-90">
+          <button
+            onClick={openConfirmationModal}
+            className="bg-red mt-3 rounded-full py-3 text-white hover:cursor-pointer hover:brightness-90"
+          >
             Confirm Order
           </button>
         </>

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import ProductCard from "./components/ProductCard";
 import Cart from "./components/Cart";
+import ConfirmationModal from "./components/ConfirmationModal";
 
 function App() {
   const [data, setData] = useState([]);
@@ -8,6 +9,7 @@ function App() {
   const [totalItems, setTotalItems] = useState(0);
   const [totalOrder, setTotalOrder] = useState(0);
   const [removedItem, setRemovedItem] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   fetch("../db/data.json")
     .then((response) => response.json())
@@ -42,10 +44,17 @@ function App() {
     setTotalOrder(total);
   };
 
+  const clearAll = () => {
+    setCartItems([]);
+    setTotalItems(0);
+    setRemovedItem("clearAll");
+    setIsModalOpen(false);
+  };
+
   return (
     <div
       id="container"
-      className="mx-5 my-10 flex min-h-dvh flex-col items-center justify-center gap-7 md:flex-row md:items-start"
+      className="relative mx-5 my-10 flex min-h-dvh flex-col items-center justify-center gap-7 md:flex-row md:items-start"
     >
       <div id="products-list-container" className="w-full md:w-3xl">
         <h1 className="mb-8 text-4xl font-bold">Desserts</h1>
@@ -61,8 +70,8 @@ function App() {
               category={item.category}
               price={item.price}
               updateCart={updateCart}
-              cartItems={cartItems}
               removedItem={removedItem}
+              setRemovedItem={setRemovedItem}
             />
           ))}
         </div>
@@ -78,8 +87,19 @@ function App() {
           cartItems={cartItems}
           removeCartItem={removeCartItem}
           totalOrder={totalOrder}
+          setIsModalOpen={setIsModalOpen}
         />
       </div>
+      {isModalOpen && (
+        <>
+          <ConfirmationModal
+            cartItems={cartItems}
+            totalOrder={totalOrder}
+            clearAll={clearAll}
+          />
+          <div className="bg-dim fixed top-0 left-0 h-full w-full opacity-60"></div>
+        </>
+      )}
     </div>
   );
 }

@@ -11,6 +11,8 @@
   --color-rose-400: hsl(7, 20%, 60%);
   --color-rose-500: hsl(12, 20%, 44%);
   --color-rose-900: hsl(14, 65%, 9%);
+
+  --color-dim: hsl(40, 1%, 49%);
 }
 
 * {
