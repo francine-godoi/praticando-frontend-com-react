@@ -6,13 +6,15 @@ const ConfirmationModal = ({ cartItems, totalOrder, clearAll }) => {
   };
 
   return (
-    <div className="absolute top-[50%] left-[50%] z-10 h-fit w-80 translate-x-[-50%] translate-y-[-50%] rounded-xl bg-white p-8 md:w-xl">
+    <div className="absolute bottom-0 z-10 w-full rounded-t-xl bg-white px-6 py-10 md:top-[50%] md:left-[50%] md:h-fit md:w-md md:translate-[-50%] md:rounded-xl md:p-8 lg:w-xl">
       <img
         className="mb-4 w-10"
         src="../src/assets/images/icon-order-confirmed.svg"
       ></img>
-      <h3 className="text-4xl font-bold text-rose-900">Order Confirmed</h3>
-      <p className="mt-2 mb-8 font-normal text-rose-500">
+      <h3 className="w-3xs text-4xl font-bold text-rose-900 md:w-full">
+        Order Confirmed
+      </h3>
+      <p className="mt-2 mb-8 text-sm font-normal text-rose-500">
         We hope you enjoy your food!
       </p>
       {cartItems.map((item) => (
@@ -23,7 +25,9 @@ const ConfirmationModal = ({ cartItems, totalOrder, clearAll }) => {
           <div className="flex items-center gap-5">
             <img className="w-14" src={item.image} alt="" />
             <div id="info-container" className="flex flex-col gap-1.5">
-              <p className="text-sm font-semibold text-rose-900">{item.name}</p>
+              <p className="w-40 overflow-hidden text-sm font-semibold text-nowrap text-ellipsis text-rose-900">
+                {item.name}
+              </p>
               <div id="totals-info" className="flex gap-3">
                 <span className="text-red mr-3 text-sm font-semibold">
                   {item.quantity}x
@@ -50,7 +54,7 @@ const ConfirmationModal = ({ cartItems, totalOrder, clearAll }) => {
       </div>
       <button
         onClick={startNewOrder}
-        className="bg-red mt-5 w-full rounded-full py-3 text-white hover:cursor-pointer hover:brightness-90"
+        className="bg-red mt-5 w-full rounded-full py-3 text-sm font-semibold text-white hover:cursor-pointer hover:brightness-90"
       >
         Start New Order
       </button>

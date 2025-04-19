@@ -52,43 +52,45 @@ function App() {
   };
 
   return (
-    <div
-      id="container"
-      className="relative mx-5 my-10 flex min-h-dvh flex-col items-center justify-center gap-7 md:flex-row md:items-start"
-    >
-      <div id="products-list-container" className="w-full md:w-3xl">
-        <h1 className="mb-8 text-4xl font-bold">Desserts</h1>
-        <div
-          id="products-grid-container"
-          className="grid grid-cols-1 gap-7 md:grid-cols-[repeat(auto-fit,minmax(200px,1fr))]"
-        >
-          {data.map((item, index) => (
-            <ProductCard
-              key={index}
-              image={item.image}
-              name={item.name}
-              category={item.category}
-              price={item.price}
-              updateCart={updateCart}
-              removedItem={removedItem}
-              setRemovedItem={setRemovedItem}
-            />
-          ))}
-        </div>
-      </div>
+    <div className="relative">
       <div
-        id="cart-container"
-        className="flex h-fit w-80 flex-col rounded-2xl bg-white p-5 md:w-96"
+        id="container"
+        className="mx-5 mt-10 flex min-h-dvh flex-col items-center justify-center gap-7 md:flex-row md:items-start"
       >
-        <h3 className="text-red mb-2 text-xl font-bold">
-          Your Cart ({totalItems})
-        </h3>
-        <Cart
-          cartItems={cartItems}
-          removeCartItem={removeCartItem}
-          totalOrder={totalOrder}
-          setIsModalOpen={setIsModalOpen}
-        />
+        <div id="products-list-container" className="w-full md:w-3xl">
+          <h1 className="mb-8 text-4xl font-bold">Desserts</h1>
+          <div
+            id="products-grid-container"
+            className="grid grid-cols-1 gap-7 md:grid-cols-[repeat(auto-fit,minmax(200px,1fr))]"
+          >
+            {data.map((item, index) => (
+              <ProductCard
+                key={index}
+                image={item.image}
+                name={item.name}
+                category={item.category}
+                price={item.price}
+                updateCart={updateCart}
+                removedItem={removedItem}
+                setRemovedItem={setRemovedItem}
+              />
+            ))}
+          </div>
+        </div>
+        <div
+          id="cart-container"
+          className="flex h-fit w-80 flex-col rounded-2xl bg-white p-5 md:w-96"
+        >
+          <h3 className="text-red mb-2 text-xl font-bold">
+            Your Cart ({totalItems})
+          </h3>
+          <Cart
+            cartItems={cartItems}
+            removeCartItem={removeCartItem}
+            totalOrder={totalOrder}
+            setIsModalOpen={setIsModalOpen}
+          />
+        </div>
       </div>
       {isModalOpen && (
         <>
