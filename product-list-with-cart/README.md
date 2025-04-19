@@ -15,4 +15,14 @@ Users should be able to:
 
 ### Screenshot
 
-![](./screenshot.jpg)
+![](./screenshots/product-list-with-cart-final-product.jpg)
+
+![](./screenshots/product-list-with-cart-selection.jpg)
+
+![](./screenshots/product-list-with-cart-confirmation.jpg)
+
+![](./screenshots/product-list-with-cart-mobile.jpg)
+
+![](./screenshots/product-list-with-cart-mobile-selection.jpg)
+
+![](./screenshots/product-list-with-cart-mobile-confirmation.jpg)
