@@ -1,6 +1,6 @@
 # Projetos Front-end com React
 
-Coleção de projetos front-end utilizando React para praticar
+Coleção de projetos front-end utilizando React + Tailwind CSS para praticar
 
 ---
 
