@@ -52,7 +52,7 @@ function App() {
   };
 
   return (
-    <div className="relative">
+    <>
       <div
         id="container"
         className="mx-5 mt-10 flex min-h-dvh flex-col items-center justify-center gap-7 md:flex-row md:items-start"
@@ -102,7 +102,7 @@ function App() {
           <div className="bg-dim fixed top-0 left-0 h-full w-full opacity-60"></div>
         </>
       )}
-    </div>
+    </>
   );
 }
 
