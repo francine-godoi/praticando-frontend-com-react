@@ -7,6 +7,7 @@ const ProductCard = ({
   price,
   updateCart,
   removedItem,
+  setRemovedItem,
 }) => {
   const [openSelector, toggleSelector] = useState(false);
   const [quantity, setQuantity] = useState(0);
@@ -25,7 +26,12 @@ const ProductCard = ({
   }
 
   const addToCart = () => {
-    const item = { name: name, quantity: quantity, price: price };
+    const item = {
+      image: image.thumbnail,
+      name: name,
+      quantity: quantity,
+      price: price,
+    };
     updateCart(item);
   };
 
@@ -34,9 +40,10 @@ const ProductCard = ({
   }, [quantity]);
 
   useEffect(() => {
-    if (removedItem === name) {
+    if (removedItem === name || removedItem === "clearAll") {
       toggleSelector(false);
       setQuantity(0);
+      setRemovedItem(null);
     }
   }, [removedItem]);
 
