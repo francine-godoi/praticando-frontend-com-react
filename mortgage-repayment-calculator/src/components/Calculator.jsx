@@ -1,13 +1,57 @@
 import React from "react";
 
-const Calculator = () => {
+// https://www.dhiwise.com/post/a-step-by-step-guide-to-retrieving-input-values-in-react
+
+const Calculator = ({
+  formData,
+  setFormData,
+  setMonthlyRepayment,
+  setTotalRepayment,
+  setTotalInterest,
+  setMonthlyInterest,
+}) => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const { amount, interest, term, type } = e.target.elements;
+
+    const principalValue = parseFloat(amount.value);
+    const annualInterestRate = parseFloat(interest.value);
+    const years = parseInt(term.value);
+
+    const monthlyRate = annualInterestRate / 100 / 12;
+    const numberOfPayments = years * 12;
+
+    const numerator = monthlyRate * Math.pow(1 + monthlyRate, numberOfPayments);
+    const denominator = Math.pow(1 + monthlyRate, numberOfPayments) - 1;
+
+    const monthlyPayment = principalValue * (numerator / denominator);
+
+    setMonthlyRepayment(monthlyPayment);
+    setTotalRepayment(monthlyPayment * numberOfPayments);
+    setMonthlyInterest(
+      (monthlyPayment * numberOfPayments - principalValue) / numberOfPayments,
+    );
+    setTotalInterest(monthlyPayment * numberOfPayments - principalValue);
+  };
+
+  const clearAll = (e) => {
+    e.preventDefault();
+    setMonthlyRepayment(0);
+    setTotalRepayment(0);
+    setTotalInterest(0);
+    setMonthlyInterest(0);
+  };
+
   return (
-    <form className="rounded-full bg-white p-10">
+    <form onSubmit={handleSubmit} className="rounded-full bg-white p-10">
       <div className="mb-10 flex justify-between">
         <h1 className="text-2xl font-bold text-slate-900">
           Mortgage Calculator
         </h1>
-        <button className="font-medium text-slate-700 underline decoration-slate-500 decoration-2 hover:cursor-pointer">
+        <button
+          onClick={clearAll}
+          className="font-medium text-slate-700 underline decoration-slate-500 decoration-2 hover:cursor-pointer"
+        >
           Clear All
         </button>
       </div>
@@ -105,7 +149,10 @@ const Calculator = () => {
         </div>
       </div>
 
-      <button className="bg-lime hover:bg-lime/75 flex gap-3 rounded-full px-8 py-3 text-lg font-bold text-slate-900 hover:cursor-pointer">
+      <button
+        type="submit"
+        className="bg-lime hover:bg-lime/75 flex gap-3 rounded-full px-8 py-3 text-lg font-bold text-slate-900 hover:cursor-pointer"
+      >
         <img
           src="../src/assets/images/icon-calculator.svg"
           alt="calculator icon"
