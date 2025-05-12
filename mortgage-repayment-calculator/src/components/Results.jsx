@@ -8,14 +8,19 @@ const Results = ({
   type,
 }) => {
   const [result, setResult] = useState(false);
+  const [show, setShow] = useState(false);
 
   useEffect(() => {
-    if (monthlyRepayment !== 0) {
+    if (monthlyRepayment !== 0 || monthlyInterest !== 0) {
       setResult(true);
     } else {
       setResult(false);
     }
   });
+
+  useEffect(() => {
+    setShow(type);
+  }, [monthlyRepayment, monthlyInterest]);
 
   return (
     <div
@@ -55,33 +60,37 @@ const Results = ({
           <div className="border-t-lime relative mt-10 rounded-lg border-t-4 bg-slate-900 p-7">
             <div className="absolute top-0 left-0 h-full w-full rounded-lg bg-slate-900 brightness-80"></div>
             <p className="relative z-10 mb-4 text-sm font-medium text-slate-300">
-              {type === "repayment"
+              {show === "repayment"
                 ? "Your monthly repayments"
                 : "Your monthly interest"}
             </p>
             <span className="text-lime relative z-10 text-5xl font-bold">
               £
-              {type === "repayment"
+              {show === "repayment"
                 ? monthlyRepayment.toLocaleString("en-US", {
+                    minimumFractionDigits: 2,
                     maximumFractionDigits: 2,
                   })
                 : monthlyInterest.toLocaleString("en-US", {
+                    minimumFractionDigits: 2,
                     maximumFractionDigits: 2,
                   })}
             </span>
-            <hr class="relative z-10 my-8 h-px border-0 bg-slate-700/30" />
+            <hr className="relative z-10 my-8 h-px border-0 bg-slate-700/30" />
             <p className="relative z-10 mb-2 text-sm font-medium text-slate-300">
-              {type === "repayment"
+              {show === "repayment"
                 ? "Total you'll repay over the term"
                 : "Total interest you'll repay over the term"}
             </p>
             <span className="relative z-10 text-xl font-bold">
               £
-              {type === "repayment"
+              {show === "repayment"
                 ? totalRepayment.toLocaleString("en-US", {
+                    minimumFractionDigits: 2,
                     maximumFractionDigits: 2,
                   })
                 : totalInterest.toLocaleString("en-US", {
+                    minimumFractionDigits: 2,
                     maximumFractionDigits: 2,
                   })}
             </span>

@@ -10,13 +10,20 @@ const Calculator = ({
   setTotalInterest,
   setMonthlyInterest,
 }) => {
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    const { amount, interest, term, type } = e.target.elements;
 
-    const principalValue = parseFloat(amount.value);
-    const annualInterestRate = parseFloat(interest.value);
-    const years = parseInt(term.value);
+    const principalValue = parseFloat(formData.amount);
+    const annualInterestRate = parseFloat(formData.interest);
+    const years = parseInt(formData.term);
 
     const monthlyRate = annualInterestRate / 100 / 12;
     const numberOfPayments = years * 12;
@@ -26,16 +33,32 @@ const Calculator = ({
 
     const monthlyPayment = principalValue * (numerator / denominator);
 
-    setMonthlyRepayment(monthlyPayment);
-    setTotalRepayment(monthlyPayment * numberOfPayments);
-    setMonthlyInterest(
-      (monthlyPayment * numberOfPayments - principalValue) / numberOfPayments,
-    );
-    setTotalInterest(monthlyPayment * numberOfPayments - principalValue);
+    if (formData.type === "repayment") {
+      setMonthlyRepayment(monthlyPayment);
+      setTotalRepayment(monthlyPayment * numberOfPayments);
+      setMonthlyInterest(0);
+      setTotalInterest(0);
+    } else if (formData.type === "interest-only") {
+      setMonthlyInterest(
+        (monthlyPayment * numberOfPayments - principalValue) / numberOfPayments,
+      );
+      setTotalInterest(monthlyPayment * numberOfPayments - principalValue);
+      setMonthlyRepayment(0);
+      setTotalRepayment(0);
+    }
   };
 
   const clearAll = (e) => {
     e.preventDefault();
+
+    setFormData((prevState) => ({
+      ...prevState,
+      amount: "",
+      term: "",
+      interest: "",
+      type: "",
+    }));
+
     setMonthlyRepayment(0);
     setTotalRepayment(0);
     setTotalInterest(0);
@@ -70,6 +93,8 @@ const Calculator = ({
             name="amount"
             id="amount"
             autoComplete="off"
+            value={formData.amount}
+            onChange={handleChange}
           />
         </div>
       </div>
@@ -86,6 +111,8 @@ const Calculator = ({
               name="term"
               id="term"
               autoComplete="off"
+              value={formData.term}
+              onChange={handleChange}
             />
             <div className="group-focus-within:bg-lime absolute top-0 right-0 rounded-r-md bg-slate-100 px-3.5 py-2.5 font-bold text-slate-700 group-focus-within:text-slate-900 group-hover:cursor-pointer">
               years
@@ -106,6 +133,8 @@ const Calculator = ({
               name="interest"
               id="interest"
               autoComplete="off"
+              value={formData.interest}
+              onChange={handleChange}
             />
             <div className="group-focus-within:bg-lime absolute top-0 right-0 rounded-r-md bg-slate-100 px-3.5 py-2.5 font-bold text-slate-700 group-focus-within:text-slate-900 group-hover:cursor-pointer hover:cursor-pointer">
               %
@@ -124,6 +153,8 @@ const Calculator = ({
             id="repayment"
             value="repayment"
             className="checked:accent-lime group-hover:border-lime hover:cursor-pointer"
+            checked={formData.type == "repayment"}
+            onChange={handleChange}
           />
           <label
             className="group-hover:border-lime inline w-full text-lg font-bold text-slate-900 hover:cursor-pointer"
@@ -139,6 +170,8 @@ const Calculator = ({
             id="interest-only"
             value="interest-only"
             className="checked:accent-lime group-hover:border-lime hover:cursor-pointer"
+            checked={formData.type == "interest-only"}
+            onChange={handleChange}
           />
           <label
             className="group-hover:border-lime inline w-full text-lg font-bold text-slate-900 hover:cursor-pointer"
