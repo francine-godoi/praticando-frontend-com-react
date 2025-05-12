@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 // https://www.dhiwise.com/post/a-step-by-step-guide-to-retrieving-input-values-in-react
 
@@ -10,17 +10,56 @@ const Calculator = ({
   setTotalInterest,
   setMonthlyInterest,
 }) => {
+  const [error, setError] = useState({
+    amountError: false,
+    termError: false,
+    interestError: false,
+    typeError: false,
+  });
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevState) => ({
       ...prevState,
       [name]: value,
     }));
+
+    if (value !== "") {
+      const errorName = name + "Error";
+      setError((error) => ({
+        ...error,
+        [errorName]: false,
+      }));
+    }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    let errorCount = 0;
 
+    for (let [key, value] of Object.entries(formData)) {
+      let errorName = key + "Error";
+
+      if (value !== "") {
+        setError((error) => ({
+          ...error,
+          [errorName]: false,
+        }));
+      } else {
+        errorCount++;
+        setError((error) => ({
+          ...error,
+          [errorName]: true,
+        }));
+      }
+    }
+
+    if (errorCount === 0) {
+      calculateMortgage();
+    }
+  };
+
+  const calculateMortgage = () => {
     const principalValue = parseFloat(formData.amount);
     const annualInterestRate = parseFloat(formData.interest);
     const years = parseInt(formData.term);
@@ -59,6 +98,14 @@ const Calculator = ({
       type: "",
     }));
 
+    setError((error) => ({
+      ...error,
+      amountError: false,
+      termError: false,
+      interestError: false,
+      typeError: false,
+    }));
+
     setMonthlyRepayment(0);
     setTotalRepayment(0);
     setTotalInterest(0);
@@ -66,9 +113,12 @@ const Calculator = ({
   };
 
   return (
-    <form onSubmit={handleSubmit} className="rounded-full bg-white p-10">
-      <div className="mb-10 flex justify-between">
-        <h1 className="text-2xl font-bold text-slate-900">
+    <form
+      onSubmit={handleSubmit}
+      className="bg-white p-6 lg:rounded-full lg:p-10"
+    >
+      <div className="mb-5 flex flex-col items-start lg:mb-10 lg:flex-row lg:justify-between">
+        <h1 className="mb-1.5 text-2xl font-bold text-slate-900">
           Mortgage Calculator
         </h1>
         <button
@@ -83,8 +133,12 @@ const Calculator = ({
         <label className="mb-2.5 font-medium text-slate-700" htmlFor="amount">
           Mortgage Amount
         </label>
-        <div className="focus-within:border-lime group relative flex rounded-md border border-slate-500 p-2.5 hover:border-slate-900">
-          <div className="group-focus-within:bg-lime absolute top-0 left-0 rounded-l-md bg-slate-100 px-3.5 py-2.5 font-bold text-slate-700 group-focus-within:text-slate-900 group-hover:cursor-pointer">
+        <div
+          className={`focus-within:border-lime group relative flex rounded-md border ${error.amountError ? "border-red" : "border-slate-500"} p-2.5 hover:border-slate-900`}
+        >
+          <div
+            className={`group-focus-within:bg-lime absolute top-0 left-0 rounded-l-[5px] ${error.amountError ? "bg-red text-white" : "bg-slate-100 text-slate-700"} px-3.5 py-2.5 font-bold group-focus-within:text-slate-900 group-hover:cursor-pointer`}
+          >
             £
           </div>
           <input
@@ -97,14 +151,21 @@ const Calculator = ({
             onChange={handleChange}
           />
         </div>
+        {error.amountError && (
+          <span className="text-red mt-3 text-xs font-bold">
+            This field is required
+          </span>
+        )}
       </div>
 
-      <div className="my-5 flex gap-4">
+      <div className="my-5 flex flex-col gap-4 lg:flex-row">
         <div className="flex flex-col">
           <label className="mb-2.5 font-medium text-slate-700" htmlFor="term">
             Mortgage Term
           </label>
-          <div className="group focus-within:border-lime relative w-52 rounded-md border border-slate-500 p-2.5 font-bold text-slate-900 outline-0 hover:cursor-pointer hover:border-slate-900">
+          <div
+            className={`group focus-within:border-lime border ${error.termError ? "border-red" : "border-slate-500"} relative w-full rounded-md p-2.5 font-bold text-slate-900 outline-0 hover:cursor-pointer hover:border-slate-900 lg:w-52`}
+          >
             <input
               className="ml-1 w-full font-bold text-slate-900 outline-0 group-hover:cursor-pointer"
               type="text"
@@ -114,10 +175,17 @@ const Calculator = ({
               value={formData.term}
               onChange={handleChange}
             />
-            <div className="group-focus-within:bg-lime absolute top-0 right-0 rounded-r-md bg-slate-100 px-3.5 py-2.5 font-bold text-slate-700 group-focus-within:text-slate-900 group-hover:cursor-pointer">
+            <div
+              className={`group-focus-within:bg-lime font-boldgroup-focus-within:text-slate-900 absolute top-0 right-0 rounded-r-[5px] px-3.5 py-2.5 group-hover:cursor-pointer ${error.termError ? "bg-red text-white" : "bg-slate-100 text-slate-700"}`}
+            >
               years
             </div>
           </div>
+          {error.termError && (
+            <span className="text-red mt-3 text-xs font-bold">
+              This field is required
+            </span>
+          )}
         </div>
         <div className="flex flex-col">
           <label
@@ -126,7 +194,9 @@ const Calculator = ({
           >
             Interest Rate
           </label>
-          <div className="group focus-within:border-lime relative w-52 rounded-md border border-slate-500 p-2.5 font-bold text-slate-900 outline-0 hover:cursor-pointer hover:border-slate-900">
+          <div
+            className={`group focus-within:border-lime relative w-full rounded-md border lg:w-52 ${error.interestError ? "border-red" : "border-slate-500"} p-2.5 font-bold text-slate-900 outline-0 hover:cursor-pointer hover:border-slate-900`}
+          >
             <input
               className="ml-1 w-full font-bold text-slate-900 outline-0 group-hover:cursor-pointer"
               type="text"
@@ -136,14 +206,21 @@ const Calculator = ({
               value={formData.interest}
               onChange={handleChange}
             />
-            <div className="group-focus-within:bg-lime absolute top-0 right-0 rounded-r-md bg-slate-100 px-3.5 py-2.5 font-bold text-slate-700 group-focus-within:text-slate-900 group-hover:cursor-pointer hover:cursor-pointer">
+            <div
+              className={`group-focus-within:bg-lime absolute top-0 right-0 rounded-r-[5px] px-3.5 py-2.5 font-bold group-focus-within:text-slate-900 group-hover:cursor-pointer hover:cursor-pointer ${error.interestError ? "bg-red text-white" : "bg-slate-100 text-slate-700"}`}
+            >
               %
             </div>
           </div>
+          {error.interestError && (
+            <span className="text-red mt-3 text-xs font-bold">
+              This field is required
+            </span>
+          )}
         </div>
       </div>
 
-      <div className="mb-10 flex flex-col gap-2.5">
+      <div className="mb-5 flex flex-col gap-2.5 lg:mb-10">
         <label className="font-medium text-slate-700">Mortgage Type</label>
 
         <div className="has-checked:bg-lime/20 group hover:border-lime has-checked:border-lime flex gap-4 rounded-md border border-slate-500 p-2.5 hover:cursor-pointer">
@@ -180,11 +257,16 @@ const Calculator = ({
             Interest Only
           </label>
         </div>
+        {error.typeError && (
+          <span className="text-red mt-1 text-xs font-bold">
+            This field is required
+          </span>
+        )}
       </div>
 
       <button
         type="submit"
-        className="bg-lime hover:bg-lime/75 flex gap-3 rounded-full px-8 py-3 text-lg font-bold text-slate-900 hover:cursor-pointer"
+        className="bg-lime hover:bg-lime/75 flex w-full justify-center gap-3 rounded-full px-8 py-3 text-lg font-bold text-slate-900 hover:cursor-pointer"
       >
         <img
           src="../src/assets/images/icon-calculator.svg"

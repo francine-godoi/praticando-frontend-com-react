@@ -16,8 +16,8 @@ function App() {
   const [totalInterest, setTotalInterest] = useState(0);
 
   return (
-    <div className="w-5xl rounded-3xl bg-white">
-      <div className="grid grid-cols-2">
+    <div className="rounded-3xl bg-white lg:w-5xl">
+      <div className="grid w-full grid-cols-1 lg:grid-cols-2">
         <Calculator
           formData={formData}
           setFormData={setFormData}
