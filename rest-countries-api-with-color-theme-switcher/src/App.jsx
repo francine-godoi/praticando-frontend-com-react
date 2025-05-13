@@ -1,5 +1,13 @@
+import Header from "./components/Header";
+import Home from "./pages/Home";
+
 function App() {
-  return <></>;
+  return (
+    <div className="bg-grey-50">
+      <Header />
+      <Home />
+    </div>
+  );
 }
 
 export default App;
