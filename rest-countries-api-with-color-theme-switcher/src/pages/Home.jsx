@@ -1,19 +1,14 @@
 import React, { useState } from "react";
 import InfoCard from "../components/InfoCard";
 
-const Home = () => {
+const Home = ({ countryList }) => {
   const [search, setSearch] = useState("");
-  const [countryList, setCountryList] = useState([]);
 
   const handleChange = (e) => {
     const { value } = e.target;
     setSearch(value);
     console.log(search);
   };
-
-  fetch("../src/assets/data.json")
-    .then((response) => response.json())
-    .then((data) => setCountryList(data));
 
   return (
     <main className="h-full px-40">
@@ -42,6 +37,7 @@ const Home = () => {
             population={country.population}
             region={country.region}
             capital={country.capital}
+            alpha3Code={country.alpha3Code}
           />
         ))}
       </div>

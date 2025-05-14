@@ -1,6 +1,10 @@
-const InfoCard = ({ flag, name, population, region, capital }) => {
+import { Link } from "react-router";
+const InfoCard = ({ flag, name, population, region, capital, alpha3Code }) => {
   return (
-    <div className="text-grey-950 w-fit rounded-lg bg-white shadow-md hover:cursor-pointer">
+    <Link
+      to={`/details/${alpha3Code}`}
+      className="text-grey-950 w-fit rounded-lg bg-white shadow-md hover:cursor-pointer"
+    >
       <div className="w-64 rounded-t-lg">
         <img className="aspect-[3/2] w-full rounded-t-lg" src={flag}></img>
       </div>
@@ -19,7 +23,7 @@ const InfoCard = ({ flag, name, population, region, capital }) => {
           Capital: <span className="font-light">{capital}</span>
         </p>
       </div>
-    </div>
+    </Link>
   );
 };
 
