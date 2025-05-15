@@ -7,6 +7,7 @@ import axios from "axios";
 
 function App() {
   const [countryList, setCountryList] = useState([]);
+  const [lightMode, setLightMode] = useState(true);
 
   useEffect(() => {
     getData();
@@ -21,14 +22,19 @@ function App() {
   }
 
   return (
-    <div className="bg-grey-50">
+    <div className={lightMode ? "bg-grey-50" : "bg-blue-950"}>
       <BrowserRouter>
-        <Header />
+        <Header lightMode={lightMode} setLightMode={setLightMode} />
         <Routes>
-          <Route path="/" element={<Home countryList={countryList} />} />
+          <Route
+            path="/"
+            element={<Home countryList={countryList} lightMode={lightMode} />}
+          />
           <Route
             path="/details/:alpha3Code"
-            element={<Details countryList={countryList} />}
+            element={
+              <Details countryList={countryList} lightMode={lightMode} />
+            }
           />
         </Routes>
       </BrowserRouter>

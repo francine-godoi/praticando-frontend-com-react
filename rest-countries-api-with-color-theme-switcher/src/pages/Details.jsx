@@ -2,13 +2,13 @@ import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router";
 import axios from "axios";
 
-const Details = ({ countryList }) => {
+const Details = ({ countryList, lightMode }) => {
   const { alpha3Code } = useParams();
   const [countryDetails, setCountryDetails] = useState([]);
 
   useEffect(() => {
     getData();
-  }, [countryList]);
+  }, [countryList, alpha3Code]);
 
   const getData = () => {
     let country = countryList.filter((c) => c.alpha3Code == alpha3Code);
@@ -21,10 +21,10 @@ const Details = ({ countryList }) => {
   };
 
   return (
-    <main className="h-full px-40">
+    <main className="h-full min-h-dvh px-40">
       <Link
         to="/"
-        className="text-grey-950 my-12 flex w-fit items-center gap-1 rounded-lg bg-white px-10 py-2.5 text-sm font-semibold shadow-(--shadow)"
+        className={`${lightMode ? "text-grey-950 bg-white" : "bg-blue-900 text-white"} my-12 flex w-fit items-center gap-1 rounded-lg px-10 py-2.5 text-sm font-semibold shadow-(--shadow)`}
       >
         <ion-icon name="arrow-back-outline"></ion-icon>Back
       </Link>
@@ -38,7 +38,9 @@ const Details = ({ countryList }) => {
               alt={`${country.name} flag`}
             />
           </div>
-          <div className="text-grey-950 flex flex-col justify-center">
+          <div
+            className={`${lightMode ? "text-grey-950" : "text-white"} flex flex-col justify-center`}
+          >
             <h2 className="mb-8 text-2xl font-extrabold">{country.name}</h2>
             <div className="grid grid-cols-2 gap-20">
               <div>
@@ -92,13 +94,13 @@ const Details = ({ countryList }) => {
               <p className="mr-5 w-36 font-semibold">Border Countries: </p>
               <div className="flex flex-wrap gap-2.5">
                 {country.borders?.map((border, index) => (
-                  <a
-                    className="w-24 truncate rounded-sm p-1 text-center text-sm font-light shadow-(--shadow)"
-                    href={`/details/${findBorderCountry(border).alpha3Code}`}
+                  <Link
+                    className={`${lightMode ? "bg-white" : "bg-blue-900"} w-24 truncate rounded-sm p-1 text-center text-sm font-light shadow-(--shadow)`}
+                    to={`/details/${findBorderCountry(border).alpha3Code}`}
                     key={`border-${index}`}
                   >
                     {findBorderCountry(border).name}{" "}
-                  </a>
+                  </Link>
                 ))}
               </div>
             </div>
