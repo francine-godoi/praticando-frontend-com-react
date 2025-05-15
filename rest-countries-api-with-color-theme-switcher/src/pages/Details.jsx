@@ -2,26 +2,18 @@ import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router";
 import axios from "axios";
 
-const Details = () => {
+const Details = ({ countryList }) => {
   const { alpha3Code } = useParams();
-  const [countryList, setCountryList] = useState([]);
   const [countryDetails, setCountryDetails] = useState([]);
 
   useEffect(() => {
     getData();
-  }, []);
+  }, [countryList]);
 
-  async function getData() {
-    await axios("../src/assets/data.json")
-      .then((response) => {
-        setCountryList(response.data);
-        let country = response.data.filter((c) => c.alpha3Code == alpha3Code);
-        setCountryDetails(country);
-      })
-      .catch((error) => {
-        console.error("Error fetching data: ", error);
-      });
-  }
+  const getData = () => {
+    let country = countryList.filter((c) => c.alpha3Code == alpha3Code);
+    setCountryDetails(country);
+  };
 
   const findBorderCountry = (border) => {
     let borderCountry = countryList.find((c) => c.alpha3Code == border);
@@ -46,7 +38,7 @@ const Details = () => {
               alt={`${country.name} flag`}
             />
           </div>
-          <div className="flex flex-col justify-center">
+          <div className="text-grey-950 flex flex-col justify-center">
             <h2 className="mb-8 text-2xl font-extrabold">{country.name}</h2>
             <div className="grid grid-cols-2 gap-20">
               <div>
@@ -63,7 +55,7 @@ const Details = () => {
                 <p className="my-1 font-semibold">
                   Region: <span className="font-light">{country.region}</span>
                 </p>
-                <p className="my-1 my-2 font-semibold">
+                <p className="my-2 font-semibold">
                   Sub Region:{" "}
                   <span className="font-light">{country.subregion}</span>
                 </p>

@@ -26,7 +26,10 @@ function App() {
         <Header />
         <Routes>
           <Route path="/" element={<Home countryList={countryList} />} />
-          <Route path="/details/:alpha3Code" element={<Details />} />
+          <Route
+            path="/details/:alpha3Code"
+            element={<Details countryList={countryList} />}
+          />
         </Routes>
       </BrowserRouter>
     </div>
