@@ -31,10 +31,10 @@ const Home = ({ countryList, lightMode }) => {
   };
 
   return (
-    <main className="h-full min-h-dvh px-40 pb-10">
-      <div className="flex items-center justify-between">
+    <main className="min-h-dvh w-full px-5 pb-10 lg:px-2">
+      <div className="flex flex-col justify-between lg:flex-row lg:items-center">
         <div
-          className={`my-12 flex w-md items-center gap-5 rounded-lg ${lightMode ? "text-grey-400 bg-white" : "bg-blue-900 text-white"} px-7 text-sm font-semibold shadow-lg/5`}
+          className={`mt-7 mb-10 flex items-center gap-5 rounded-md lg:mt-12 lg:mb-12 lg:w-md ${lightMode ? "text-grey-400 bg-white" : "bg-blue-900 text-white"} px-7 text-sm font-semibold shadow-lg/5`}
         >
           <ion-icon name="search-sharp"></ion-icon>
           <input
@@ -53,7 +53,7 @@ const Home = ({ countryList, lightMode }) => {
         />
       </div>
 
-      <div className="grid grid-cols-[repeat(auto-fit,minmax(256px,1fr))] gap-20">
+      <div className="grid grid-cols-[repeat(auto-fit,minmax(256px,1fr))] place-items-center gap-10 lg:gap-20">
         {filteredCountries.map((country, index) => (
           <InfoCard key={index} country={country} lightMode={lightMode} />
         ))}

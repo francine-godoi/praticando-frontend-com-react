@@ -11,8 +11,8 @@ const InfoCard = ({ country, lightMode }) => {
           src={country.flag}
         ></img>
       </div>
-      <div className="p-5 text-sm">
-        <p className="mb-3 text-lg font-extrabold">{country.name}</p>
+      <div className="w-64 p-5 text-sm">
+        <p className="mb-3 truncate text-lg font-extrabold">{country.name}</p>
         <p className="font-semibold">
           Population:{" "}
           <span className="font-light">

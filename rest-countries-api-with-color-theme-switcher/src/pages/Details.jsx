@@ -21,19 +21,22 @@ const Details = ({ countryList, lightMode }) => {
   };
 
   return (
-    <main className="h-full min-h-dvh px-40">
+    <main className="min-h-dvh w-full px-7 pb-10 lg:px-2">
       <Link
         to="/"
-        className={`${lightMode ? "text-grey-950 bg-white" : "bg-blue-900 text-white"} my-12 flex w-fit items-center gap-1 rounded-lg px-10 py-2.5 text-sm font-semibold shadow-(--shadow)`}
+        className={`${lightMode ? "text-grey-950 bg-white" : "bg-blue-900 text-white"} mt-12 mb-20 flex w-fit items-center gap-1 rounded-lg px-10 py-2.5 text-sm font-semibold shadow-(--shadow) lg:mb-12`}
       >
         <ion-icon name="arrow-back-outline"></ion-icon>Back
       </Link>
 
       {countryDetails.map((country, index) => (
-        <div key={index} className="grid grid-cols-2 gap-25">
+        <div
+          key={index}
+          className="grid gap-12 md:grid-cols-1 lg:grid-cols-2 lg:gap-25"
+        >
           <div>
             <img
-              className="aspect-[3/2] w-full"
+              className="aspect-[3/2] w-full shadow-lg/25"
               src={country.flag}
               alt={`${country.name} flag`}
             />
@@ -42,7 +45,7 @@ const Details = ({ countryList, lightMode }) => {
             className={`${lightMode ? "text-grey-950" : "text-white"} flex flex-col justify-center`}
           >
             <h2 className="mb-8 text-2xl font-extrabold">{country.name}</h2>
-            <div className="grid grid-cols-2 gap-20">
+            <div className="grid grid-cols-1 gap-7 lg:grid-cols-2 lg:gap-20">
               <div>
                 <p className="font-semibold">
                   Native Name:{" "}
@@ -90,9 +93,11 @@ const Details = ({ countryList, lightMode }) => {
                 </p>
               </div>
             </div>
-            <div className="mt-12 flex gap-1">
-              <p className="mr-5 w-36 font-semibold">Border Countries: </p>
-              <div className="flex flex-wrap gap-2.5">
+            <div className="mt-12 flex flex-col gap-1 lg:flex-row">
+              <p className="mr-5 mb-4 min-w-36 text-lg font-semibold lg:text-base">
+                Border Countries:{" "}
+              </p>
+              <div className="flex w-full flex-wrap gap-2.5">
                 {country.borders?.map((border, index) => (
                   <Link
                     className={`${lightMode ? "bg-white" : "bg-blue-900"} w-24 truncate rounded-sm p-1 text-center text-sm font-light shadow-(--shadow)`}

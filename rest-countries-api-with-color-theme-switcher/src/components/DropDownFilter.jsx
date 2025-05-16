@@ -25,7 +25,7 @@ const DropDownFilter = ({ countryList, setFilteredCountries, lightMode }) => {
   return (
     <div
       onClick={toggleFilterMenu}
-      className={`relative flex w-48 items-center justify-between rounded-lg ${lightMode ? "text-grey-950 bg-white" : "bg-blue-900 text-white"} px-5 py-3.5 text-sm shadow-lg/5 hover:cursor-pointer`}
+      className={`relative mb-8 flex w-52 items-center justify-between rounded-md lg:mb-0 lg:w-48 ${lightMode ? "text-grey-950 bg-white" : "bg-blue-900 text-white"} px-5 py-3.5 text-sm shadow-lg/5 hover:cursor-pointer`}
     >
       <span>Filter by Region</span>
       <ion-icon name="chevron-down-outline"></ion-icon>
