@@ -36,7 +36,7 @@ const Details = ({ countryList, lightMode }) => {
         >
           <div>
             <img
-              className="aspect-[3/2] w-full shadow-lg/25"
+              className={`aspect-[3/2] w-full ${lightMode ? "shadow-sm" : "shadow-none"}`}
               src={country.flag}
               alt={`${country.name} flag`}
             />
@@ -94,7 +94,7 @@ const Details = ({ countryList, lightMode }) => {
               </div>
             </div>
             <div className="mt-12 flex flex-col gap-1 lg:flex-row">
-              <p className="mr-5 mb-4 min-w-36 text-lg font-semibold lg:text-base">
+              <p className="mr-5 mb-4 min-w-36 text-lg font-semibold lg:mb-0 lg:text-base">
                 Border Countries:{" "}
               </p>
               <div className="flex w-full flex-wrap gap-2.5">

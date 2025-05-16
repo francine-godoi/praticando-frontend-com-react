@@ -39,6 +39,7 @@ const Home = ({ countryList, lightMode }) => {
           <ion-icon name="search-sharp"></ion-icon>
           <input
             id="search"
+            autoComplete="off"
             className={`w-full py-3.5 outline-0 ${lightMode ? "text-grey-400 placeholder:text-grey-400 bg-white" : "bg-blue-900 text-white placeholder:text-white"}`}
             type="text"
             placeholder="Search for a country..."
