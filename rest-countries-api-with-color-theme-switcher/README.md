@@ -21,4 +21,18 @@ Users should be able to:
 
 ### Screenshot
 
-![](./screenshot.jpg)
+![](./screenshots/rest-countries-api-with-color-theme-switcher-final-product-light.jpg)
+
+![](./screenshots/rest-countries-api-with-color-theme-switcher-final-product-dark.jpg)
+
+![](./screenshots/rest-countries-api-with-color-theme-switcher-details-light.jpg)
+
+![](./screenshots/rest-countries-api-with-color-theme-switcher-details-dark.jpg)
+
+![](./screenshots/rest-countries-api-with-color-theme-switcher-home-light-mobile.jpg)
+
+![](./screenshots/rest-countries-api-with-color-theme-switcher-home-dark-mobile.jpg)
+
+![](./screenshots/rest-countries-api-with-color-theme-switcher-details-light-mobile.jpg)
+
+![](./screenshots/rest-countries-api-with-color-theme-switcher-details-dark-mobile.jpg)
