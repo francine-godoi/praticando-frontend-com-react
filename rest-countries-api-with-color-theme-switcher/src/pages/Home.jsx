@@ -3,34 +3,30 @@ import InfoCard from "../components/InfoCard";
 import DropDownFilter from "../components/DropDownFilter";
 
 const Home = ({ countryList, lightMode }) => {
-  const [search, setSearch] = useState("");
+  const [searchedCountryName, setSearchedCountryName] = useState("");
   const [filteredCountries, setFilteredCountries] = useState([]);
 
   const handleChange = (e) => {
     const { value } = e.target;
-    const searchedCountry = value.replace(
+    const countryName = value.replace(
       /(^\w|\s\w)(\S*)/g,
       (_, m1, m2) => m1.toUpperCase() + m2.toLowerCase(),
     );
-    setSearch(searchedCountry);
+    setSearchedCountryName(countryName);
   };
 
   useEffect(() => {
-    filterCountry();
-  }, [search, countryList]);
-
-  const filterCountry = () => {
-    if (search === "") {
+    if (searchedCountryName === "") {
       setFilteredCountries(countryList);
     } else {
       let filteredCountries = countryList.filter((country) =>
-        country.name.startsWith(search),
+        country.name.startsWith(searchedCountryName),
       );
       setFilteredCountries(filteredCountries);
     }
-  };
+  }, [searchedCountryName, countryList]);
 
-  return (
+   return (
     <main className="min-h-dvh w-full px-5 pb-10 lg:px-2">
       <div className="flex flex-col justify-between lg:flex-row lg:items-center">
         <div
@@ -43,7 +39,7 @@ const Home = ({ countryList, lightMode }) => {
             className={`w-full py-3.5 outline-0 ${lightMode ? "text-grey-400 placeholder:text-grey-400 bg-white" : "bg-blue-900 text-white placeholder:text-white"}`}
             type="text"
             placeholder="Search for a country..."
-            value={search}
+            value={searchedCountryName}
             onChange={handleChange}
           />
         </div>

@@ -1,7 +1,7 @@
 import React from "react";
 
 const Header = ({ lightMode, setLightMode }) => {
-  const toggleMode = () => {
+  const toggleDarkMode = () => {
     if (lightMode) {
       setLightMode(false);
     } else {
@@ -18,7 +18,7 @@ const Header = ({ lightMode, setLightMode }) => {
       </h1>
       {lightMode && (
         <button
-          onClick={toggleMode}
+          onClick={toggleDarkMode}
           className="flex items-center gap-1.5 text-sm font-semibold hover:cursor-pointer lg:text-base"
         >
           <ion-icon name="moon-outline"></ion-icon>Dark Mode
@@ -27,7 +27,7 @@ const Header = ({ lightMode, setLightMode }) => {
 
       {!lightMode && (
         <button
-          onClick={toggleMode}
+          onClick={toggleDarkMode}
           className="flex items-center gap-1.5 text-sm font-semibold hover:cursor-pointer lg:text-base"
         >
           <ion-icon name="sunny-outline"></ion-icon>Light Mode
