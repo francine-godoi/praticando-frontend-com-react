@@ -7,15 +7,16 @@ const Details = ({ countryList, lightMode }) => {
   const [borderCountriesInfo, setBorderCountriesInfo] = useState([]);
 
   useEffect(() => {
-    let country = countryList.filter((c) => c.alpha3Code == alpha3Code);
+    if (countryList.length === 0) return;
+    let country = countryList.find((c) => c.alpha3Code == alpha3Code);
     setCountryInfo(country);
   }, [countryList, alpha3Code]);
 
   useEffect(() => {
     setBorderCountriesInfo([]);
-    for (let i = 0; i < countryInfo[0]?.borders?.length; i++) {
+    for (let i = 0; i < countryInfo.borders?.length; i++) {
       let borderCountry = countryList.find(
-        (c) => c.alpha3Code == countryInfo[0]?.borders[i],
+        (c) => c.alpha3Code == countryInfo.borders[i],
       );
 
       setBorderCountriesInfo((bci) => [
@@ -33,90 +34,86 @@ const Details = ({ countryList, lightMode }) => {
       >
         <ion-icon name="arrow-back-outline"></ion-icon>Back
       </Link>
-
-      {countryInfo.map((country, index) => (
+      <div className="grid gap-12 md:grid-cols-1 lg:grid-cols-2 lg:gap-25">
+        <div>
+          <img
+            className={`aspect-[3/2] w-full ${lightMode ? "shadow-sm" : "shadow-none"}`}
+            src={countryInfo.flag}
+            alt={`${countryInfo.name} flag`}
+          />
+        </div>
         <div
-          key={index}
-          className="grid gap-12 md:grid-cols-1 lg:grid-cols-2 lg:gap-25"
+          className={`${lightMode ? "text-grey-950" : "text-white"} flex flex-col justify-center`}
         >
-          <div>
-            <img
-              className={`aspect-[3/2] w-full ${lightMode ? "shadow-sm" : "shadow-none"}`}
-              src={country.flag}
-              alt={`${country.name} flag`}
-            />
-          </div>
-          <div
-            className={`${lightMode ? "text-grey-950" : "text-white"} flex flex-col justify-center`}
-          >
-            <h2 className="mb-8 text-2xl font-extrabold">{country.name}</h2>
-            <div className="grid grid-cols-1 gap-7 lg:grid-cols-2 lg:gap-20">
-              <div>
-                <p className="font-semibold">
-                  Native Name:{" "}
-                  <span className="font-light">{country.nativeName}</span>
-                </p>
-                <p className="my-2 font-semibold">
-                  Population:{" "}
-                  <span className="font-light">
-                    {country.population.toLocaleString("en-US")}
-                  </span>
-                </p>
-                <p className="my-1 font-semibold">
-                  Region: <span className="font-light">{country.region}</span>
-                </p>
-                <p className="my-2 font-semibold">
-                  Sub Region:{" "}
-                  <span className="font-light">{country.subregion}</span>
-                </p>
-                <p className="mb-5 font-semibold">
-                  Capital: <span className="font-light">{country.capital}</span>
-                </p>
-              </div>
-              <div>
-                <p className="font-semibold">
-                  Top Level Domain{" "}
-                  <span className="font-light">{country.topLevelDomain}</span>
-                </p>
-                <p className="my-2 font-semibold">
-                  Currency:{" "}
-                  {country.currencies?.map((currency, index) => (
-                    <span className="font-light" key={`currency-${index}`}>
-                      {currency.name}
-                      {index < country.currencies.length - 1 && ", "}
-                    </span>
-                  ))}
-                </p>
-                <p className="font-semibold">
-                  Languages:{" "}
-                  {country.languages?.map((language, index) => (
-                    <span className="font-light" key={`language-${index}`}>
-                      {language.name}
-                      {index < country.languages.length - 1 && ", "}
-                    </span>
-                  ))}
-                </p>
-              </div>
-            </div>
-            <div className="mt-12 flex flex-col gap-1 lg:flex-row">
-              <p className="mr-5 mb-4 min-w-36 text-lg font-semibold lg:mb-0 lg:text-base">
-                Border Countries:{" "}
+          <h2 className="mb-8 text-2xl font-extrabold">{countryInfo.name}</h2>
+          <div className="grid grid-cols-1 gap-7 lg:grid-cols-2 lg:gap-20">
+            <div>
+              <p className="font-semibold">
+                Native Name:{" "}
+                <span className="font-light">{countryInfo.nativeName}</span>
               </p>
-              <div className="flex w-full flex-wrap gap-2.5">
-                {borderCountriesInfo?.map((country, index) => (
-                  <Link
-                    className={`${lightMode ? "bg-white" : "bg-blue-900"} w-24 truncate rounded-sm p-1 text-center text-sm font-light shadow-(--shadow)`}
-                    to={`/details/${country.alpha3Code}`}
-                    key={`border-${index}`}
-                  >
-                    {country.name}{" "}
-                  </Link>
+              <p className="my-2 font-semibold">
+                Population:{" "}
+                <span className="font-light">
+                  {countryInfo.population?.toLocaleString("en-US")}
+                </span>
+              </p>
+              <p className="my-1 font-semibold">
+                Region: <span className="font-light">{countryInfo.region}</span>
+              </p>
+              <p className="my-2 font-semibold">
+                Sub Region:{" "}
+                <span className="font-light">{countryInfo.subregion}</span>
+              </p>
+              <p className="mb-5 font-semibold">
+                Capital:{" "}
+                <span className="font-light">{countryInfo.capital}</span>
+              </p>
+            </div>
+            <div>
+              <p className="font-semibold">
+                Top Level Domain{" "}
+                <span className="font-light">{countryInfo.topLevelDomain}</span>
+              </p>
+              <p className="my-2 font-semibold">
+                Currency:{" "}
+                {countryInfo.currencies?.map((currency, index) => (
+                  <span className="font-light" key={`currency-${index}`}>
+                    {currency.name}
+                    {index < countryInfo.currencies.length - 1 && ", "}
+                  </span>
                 ))}
-              </div>
+              </p>
+              <p className="font-semibold">
+                Languages:{" "}
+                {countryInfo.languages?.map((language, index) => (
+                  <span className="font-light" key={`language-${index}`}>
+                    {language.name}
+                    {index < countryInfo.languages.length - 1 && ", "}
+                  </span>
+                ))}
+              </p>
+            </div>
+          </div>
+          <div className="mt-12 flex flex-col gap-1 lg:flex-row">
+            <p className="mr-5 mb-4 min-w-36 text-lg font-semibold lg:mb-0 lg:text-base">
+              Border Countries:{" "}
+            </p>
+            <div className="flex w-full flex-wrap gap-2.5">
+              {borderCountriesInfo?.map((country, index) => (
+                <Link
+                  className={`${lightMode ? "bg-white" : "bg-blue-900"} w-24 truncate rounded-sm p-1 text-center text-sm font-light shadow-(--shadow)`}
+                  to={`/details/${country.alpha3Code}`}
+                  key={`border-${index}`}
+                  title={country.name}
+                >
+                  {country.name}{" "}
+                </Link>
+              ))}
             </div>
           </div>
         </div>
-      ))}
+      </div>
     </main>
   );
 };
