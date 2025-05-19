@@ -2,6 +2,7 @@ import { Link } from "react-router";
 const InfoCard = ({ country, lightMode }) => {
   return (
     <Link
+      title={country.name}
       to={`/details/${country.alpha3Code}`}
       className={`w-fit rounded-lg ${lightMode ? "text-grey-950 bg-white" : "bg-blue-900 text-white"} shadow-md hover:cursor-pointer`}
     >
